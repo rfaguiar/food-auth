@@ -5,3 +5,11 @@ Authorization: Basic Zm9vZC13ZWI6d2ViMTIz
 username=food&password=123456&grant_type=password
 
 ###
+
+POST http://localhost:8081/oauth/introspect
+Content-Type: application/x-www-form-urlencoded
+Authorization: Basic Zm9vZC13ZWI6d2ViMTIz
+
+token=kPSVC3zKJIi0Wscsmk9Q5djHGaM
+
+###
