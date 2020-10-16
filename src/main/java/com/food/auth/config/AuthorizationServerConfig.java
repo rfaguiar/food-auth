@@ -34,7 +34,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 .secret(passwordEncoder.encode("web123"))
                 .authorizedGrantTypes("password", "refresh_token")
                 .scopes("write", "read")
-                .accessTokenValiditySeconds(60*60*6)
+                .accessTokenValiditySeconds(60*60*1)
+                .refreshTokenValiditySeconds(60*60*2)
             .and()
                 .withClient("checktoken")
                     .secret(passwordEncoder.encode("check123"))
@@ -51,6 +52,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         endpoints
                 .pathMapping("/oauth/check_token", "/oauth/introspect")
                 .authenticationManager(authenticationManager)
-                .userDetailsService(userDetailsService);
+                .userDetailsService(userDetailsService)
+                .reuseRefreshTokens(false);
     }
 }
