@@ -1,0 +1,20 @@
+#GET in your browser:
+http://localhost:8081/oauth/authorize?response_type=code&client_id=food-analytics&state=abc&redirect_uri=http://aplicacao-cliente
+
+###
+POST http://localhost:8081/oauth/token
+Content-Type: application/x-www-form-urlencoded
+Authorization: Basic Zm9vZC1hbmFseXRpY3M6Zm9vZDEyMw==
+
+grant_type=authorization_code&redirect_uri=http://aplicacao-cliente&code=bzUkKc
+
+###
+
+POST http://localhost:8081/oauth/introspect
+Content-Type: application/x-www-form-urlencoded
+Authorization: Basic Zm9vZC1hbmFseXRpY3M6Zm9vZDEyMw==
+
+token=w9RYWRbaeI2j35uaAul9fW-ka1w
+
+###
+

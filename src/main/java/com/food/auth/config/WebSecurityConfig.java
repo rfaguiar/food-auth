@@ -16,7 +16,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
         auth.inMemoryAuthentication()
-            .withUser("food")
+            .withUser("food-user")
             .password(passwordEncoder().encode("123456"))
             .roles("ADMIN")
         .and()
