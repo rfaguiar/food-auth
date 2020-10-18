@@ -1,5 +1,11 @@
 # Getting Started
 
+### Redis for use token store:
+* [Redis Docker Official image](https://hub.docker.com/_/redis)
+```sh
+docker run --network minha-rede -p 6379:6379 --name redis -v $(pwd)/redis-data:/data -d redis:6-alpine redis-server --appendonly yes
+```
+
 ### Reference Documentation
 For further reference, please consider the following sections:
 
