@@ -30,13 +30,15 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     private final AuthenticationManager authenticationManager;
     private final UserDetailsService userDetailsService;
     private final RedisConnectionFactory redisConnectionFactory;
+    private final JwtKeyStoreProperties jwtKeyStoreProperties;
 
     @Autowired
-    public AuthorizationServerConfig(PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, UserDetailsService userDetailsService, RedisConnectionFactory redisConnectionFactory) {
+    public AuthorizationServerConfig(PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, UserDetailsService userDetailsService, RedisConnectionFactory redisConnectionFactory, JwtKeyStoreProperties jwtKeyStoreProperties) {
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
         this.userDetailsService = userDetailsService;
         this.redisConnectionFactory = redisConnectionFactory;
+        this.jwtKeyStoreProperties = jwtKeyStoreProperties;
     }
 
     @Override
@@ -94,10 +96,12 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         JwtAccessTokenConverter jwtAccessTokenConverter = new JwtAccessTokenConverter();
         //chave simatrica
 //        jwtAccessTokenConverter.setSigningKey("asgfasdgferqwtfdsgshgwstgqw4523refdsag234tg");
+
         //chave assimetrica
-        var jksResource = new ClassPathResource("keystores/food-api.jks");
-        var keyStorePass = "123456789";
-        var keyPairAlias = "food-api";
+        var jksResource = new ClassPathResource(jwtKeyStoreProperties.getPath());
+        var keyStorePass = jwtKeyStoreProperties.getPassword();
+        var keyPairAlias = jwtKeyStoreProperties.getKeypairAlias();
+
         var keyStoreKeyFactory = new KeyStoreKeyFactory(jksResource, keyStorePass.toCharArray());
         var keyPair = keyStoreKeyFactory.getKeyPair(keyPairAlias);
 
