@@ -5,6 +5,19 @@
 ```sh
 docker run --network minha-rede -p 6379:6379 --name redis -v $(pwd)/redis-data:/data -d redis:6-alpine redis-server --appendonly yes
 ```
+Validate Redis instalation:
+```sh
+sudo apt install redis-tools
+redis-cli
+```
+show all keys
+```sh
+KEYS *
+```
+clear keys:
+```sh
+FLUSHALL
+```
 
 ### Reference Documentation
 For further reference, please consider the following sections:
