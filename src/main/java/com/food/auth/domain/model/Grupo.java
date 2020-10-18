@@ -49,11 +49,4 @@ public record Grupo(@Id
         return Objects.hash(id, nome);
     }
 
-    public boolean removerPermissao(Permissao permissao) {
-        return permissoes.remove(permissao);
-    }
-
-    public boolean adicionarPermissao(Permissao permissao) {
-        return permissoes.add(permissao);
-    }
 }

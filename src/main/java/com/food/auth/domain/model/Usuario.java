@@ -1,7 +1,5 @@
 package com.food.auth.domain.model;
 
-import org.hibernate.annotations.CreationTimestamp;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,7 +8,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -58,19 +55,4 @@ public record Usuario(@Id
         return Objects.hash(id, nome, email, senha);
     }
 
-    public boolean senhaCoincideCom(String senha) {
-        return senha().equals(senha);
-    }
-
-    public boolean senhaNaoCoincideCom(String senha) {
-        return !senhaCoincideCom(senha);
-    }
-
-    public boolean removerGrupo(Grupo grupo) {
-        return grupos.remove(grupo);
-    }
-
-    public boolean adicionarGrupo(Grupo grupo) {
-        return grupos.add(grupo);
-    }
 }
