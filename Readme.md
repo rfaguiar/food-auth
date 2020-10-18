@@ -18,7 +18,7 @@ clear keys:
 ```sh
 FLUSHALL
 ```
-Chave Assimetrica:
+### Chave Assimetrica:
 gerar par de chave publica e privada
 ```sh
 keytool -genkeypair -alias food-api -keyalg RSA -keypass 123456 -keystore food-api.jks -storepass 123456789
@@ -27,6 +27,14 @@ listar chave
 ```sh
 keytool -list -keystore food-api.jks
 ```
+Extraindo a chave pública no formato PEM
+extrair com keytool:
+```sh
+keytool -export -rfc -alias food-api -keystore food-api.jks -file food-api-cert.pem
+openssl x509 -pubkey -noout -in food-api-cert.pem > food-api-public-key.pem
+```
+
+
 
 ### Reference Documentation
 For further reference, please consider the following sections:
