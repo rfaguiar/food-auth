@@ -1,0 +1,23 @@
+#GET in your browser:
+# Code Verifier: teste123
+# Code Challenge: teste123
+# Obs mudar o method para s256 (SHA-256)
+http://localhost:8081/oauth/authorize?response_type=code&client_id=food-analytics&state=abc&redirect_uri=http://aplicacao-cliente&code_challeng_method=plain&code_challeng=teste123
+
+###
+POST http://localhost:8081/oauth/token
+Content-Type: application/x-www-form-urlencoded
+Authorization: Basic Zm9vZC1hbmFseXRpY3M6Zm9vZDEyMw==
+
+grant_type=authorization_code&redirect_uri=http://aplicacao-cliente&code=7RgTsT&code_verifier=teste123
+
+###
+
+POST http://localhost:8081/oauth/introspect
+Content-Type: application/x-www-form-urlencoded
+Authorization: Basic Zm9vZC1hbmFseXRpY3M6Zm9vZDEyMw==
+
+token=w9RYWRbaeI2j35uaAul9fW-ka1w
+
+###
+
