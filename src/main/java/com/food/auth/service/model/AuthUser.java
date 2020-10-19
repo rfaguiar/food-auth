@@ -1,9 +1,10 @@
 package com.food.auth.service.model;
 
 import com.food.auth.domain.model.Usuario;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
-import java.util.Collections;
+import java.util.Collection;
 
 public class AuthUser extends User {
 
@@ -11,8 +12,8 @@ public class AuthUser extends User {
     private String fullName;
     private Long userId;
 
-    public AuthUser(Usuario usuario) {
-        super(usuario.email(), usuario.senha(), Collections.emptyList());
+    public AuthUser(Usuario usuario, Collection<? extends GrantedAuthority> authorities) {
+        super(usuario.email(), usuario.senha(), authorities);
         this.fullName = usuario.nome();
         this.userId = usuario.id();
     }
