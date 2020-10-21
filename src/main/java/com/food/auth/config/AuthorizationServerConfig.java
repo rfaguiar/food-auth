@@ -23,57 +23,32 @@ import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenCo
 import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFactory;
 import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 
+import javax.sql.DataSource;
 import java.util.List;
 
 @Configuration
 @EnableAuthorizationServer
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
-    private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final UserDetailsService userDetailsService;
     private final RedisConnectionFactory redisConnectionFactory;
     private final JwtKeyStoreProperties jwtKeyStoreProperties;
+    private final DataSource datasource;
 
     @Autowired
-    public AuthorizationServerConfig(PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, UserDetailsService userDetailsService, RedisConnectionFactory redisConnectionFactory, JwtKeyStoreProperties jwtKeyStoreProperties) {
-        this.passwordEncoder = passwordEncoder;
+    public AuthorizationServerConfig(AuthenticationManager authenticationManager, UserDetailsService userDetailsService, RedisConnectionFactory redisConnectionFactory, JwtKeyStoreProperties jwtKeyStoreProperties, DataSource datasource) {
         this.authenticationManager = authenticationManager;
         this.userDetailsService = userDetailsService;
         this.redisConnectionFactory = redisConnectionFactory;
         this.jwtKeyStoreProperties = jwtKeyStoreProperties;
+        this.datasource = datasource;
     }
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 
-        clients.inMemory()
-            .withClient("food-web")
-                .secret(passwordEncoder.encode("web123"))
-                .authorizedGrantTypes("password", "refresh_token")
-                .scopes("WRITE", "READ")
-                .accessTokenValiditySeconds(60*60*1)
-                .refreshTokenValiditySeconds(60*60*2)
-            .and()
-                .withClient("food-analytics")
-                .secret(passwordEncoder.encode("food123"))
-                .authorizedGrantTypes("authorization_code", "refresh_token")
-                .scopes("WRITE", "READ")
-                .redirectUris("http://localhost:8000", "http://aplicacao-cliente")
-            .and()
-                .withClient("faturamento")
-                .secret(passwordEncoder.encode("faturamento123"))
-                .authorizedGrantTypes("client_credentials")
-                .scopes("READ")
-            .and()
-                .withClient("webadmin")
-                .authorizedGrantTypes("implicit")
-                .scopes("WRITE", "READ")
-                .redirectUris("http://aplicacao-cliente")
-            .and()
-                .withClient("checktoken")
-                    .secret(passwordEncoder.encode("check123"))
-        ;
+        clients.jdbc(datasource);
     }
 
     @Override
