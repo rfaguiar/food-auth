@@ -2,19 +2,21 @@
 http://localhost:8081/oauth/authorize?response_type=code&client_id=food-analytics&state=abc&redirect_uri=http://aplicacao-cliente
 
 ###
-POST http://localhost:8081/oauth/token
+POST {{base_auth_host}}/oauth/token
 Content-Type: application/x-www-form-urlencoded
-Authorization: Basic Zm9vZC1hbmFseXRpY3M6Zm9vZDEyMw==
+Authorization: {{basic_auth_credentials}}
 
 grant_type=authorization_code&redirect_uri=http://aplicacao-cliente&code=bzUkKc
 
-###
+> {%
+    client.global.set("auth_token", response.body.access_token);
+    client.global.set("auth_refresh_token", response.body.refresh_token);
+%}
 
-POST http://localhost:8081/oauth/introspect
+###
+POST {{base_auth_host}}/oauth/introspect
 Content-Type: application/x-www-form-urlencoded
-Authorization: Basic Zm9vZC1hbmFseXRpY3M6Zm9vZDEyMw==
+Authorization: {{basic_auth_credentials}}
 
-token=w9RYWRbaeI2j35uaAul9fW-ka1w
-
-###
+token={{auth_token}}
 

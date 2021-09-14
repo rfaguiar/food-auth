@@ -34,10 +34,10 @@ public class JpaUserDetailsService implements UserDetailsService {
     }
 
     private Collection<GrantedAuthority> getAuthorities(Usuario usuario) {
-        return usuario.grupos()
+        return usuario.getGrupos()
                 .stream()
-                .flatMap(g -> g.permissoes().stream())
-                .map(p -> new SimpleGrantedAuthority(p.nome().toUpperCase()))
+                .flatMap(g -> g.getPermissoes().stream())
+                .map(p -> new SimpleGrantedAuthority(p.getNome().toUpperCase()))
                 .collect(Collectors.toSet());
     }
 }

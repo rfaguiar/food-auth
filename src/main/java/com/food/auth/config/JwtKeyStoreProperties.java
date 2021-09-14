@@ -1,19 +1,20 @@
 package com.food.auth.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Validated
 @Component
 @ConfigurationProperties("food.jwt.keystore")
 public class JwtKeyStoreProperties {
 
-
-    @NotBlank
-    private String path;
+    @NotNull
+    private Resource jksLocation;
 
     @NotBlank
     private String password;
@@ -21,12 +22,12 @@ public class JwtKeyStoreProperties {
     @NotBlank
     private String keypairAlias;
 
-    public String getPath() {
-        return path;
+    public Resource getJksLocation() {
+        return jksLocation;
     }
 
-    public void setPath(String path) {
-        this.path = path;
+    public void setJksLocation(Resource jksLocation) {
+        this.jksLocation = jksLocation;
     }
 
     public String getPassword() {

@@ -1,11 +1,17 @@
 # Getting Started
 
+### MySQL 8 docker
+* [MySQL Docker Official image](https://hub.docker.com/_/mysql)
+```sh
+docker run --rm --name mysql8 --network minha-rede -v $(pwd)/mysql-datadir:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw -p 3306:3306 -d mysql:8
+```
+
 ### Redis for use token store:
 * [Redis Docker Official image](https://hub.docker.com/_/redis)
 ```sh
 docker run --network minha-rede -p 6379:6379 --name redis -v $(pwd)/redis-data:/data -d redis:6-alpine redis-server --appendonly yes
 ```
-Validate Redis instalation:
+Validate Redis installation:
 ```sh
 sudo apt install redis-tools
 redis-cli
@@ -34,7 +40,10 @@ keytool -export -rfc -alias food-api -keystore food-api.jks -file food-api-cert.
 openssl x509 -pubkey -noout -in food-api-cert.pem > food-api-public-key.pem
 ```
 
-
+Converter jks em base64
+```sh
+cat food-prd.jks | base64 | pbcopy
+```
 
 ### Reference Documentation
 For further reference, please consider the following sections:
